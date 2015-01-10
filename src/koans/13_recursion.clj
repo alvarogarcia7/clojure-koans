@@ -16,10 +16,45 @@
 ;this destructuring is for setting the default values
 
 (defn recursive-reverse [coll]
-  __)
+  (defn rever2 [in out]
+  (if (empty? in)
+    out
+    (conj
+     (rever2 (rest in) out)
+     (first in))))
+  (rever2 coll [])
+  )
+
+(defn factorial-rec [n]
+  (if (= n 1)
+    1
+    (* n (factorial-rec (- n 1)))
+  ))
+;(- n 1) can be expressed as (dec n) - more idiomatic
+
+; does not pass the factorial 100003N
+(defn factorial-bigint [n]
+  (if (= n 1)
+    (bigint 1)
+    (* (bigint n) (factorial-bigint (bigint (- n 1))))
+  ))
+
 
 (defn factorial [n]
-  __)
+  (loop [n n
+         acc 1]
+    (if (= n 1)
+      ; remember: this value will be returned at the end of the loop
+      acc
+      (recur (dec n) (* n acc)))))
+
+; below solution copied from http://www.clojurescreencasts.com/koans-walkthrough/13.html
+(defn factorial-copied [n]
+  (loop [n n
+         res 1]
+    (if (= 0 n)
+      res
+      (recur (dec n) (* n res)))))
 
 (meditations
   "Recursion ends with a base case"
